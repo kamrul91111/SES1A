@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "118016619495",
+    "firebase_url": "https://sesdonorsystem.firebaseio.com",
+    "project_id": "sesdonorsystem",
+    "storage_bucket": "sesdonorsystem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118016619495:android:8b7ce10997511a0e",
+        "android_client_info": {
+          "package_name": "two.ses.donorapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO-21M-pmcPII9LWWIC2d3dTnkm4okIIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118016619495-l5b4kke0etnuecof8ek7umv1d10s598m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
