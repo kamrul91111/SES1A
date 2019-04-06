@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         // Start a new activity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.register_btn)
@@ -71,5 +72,6 @@ public class LoginActivity extends AppCompatActivity {
         // Start a new activity to register new user
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        finish();
     }
 }

@@ -13,7 +13,16 @@
           "package_name": "two.ses.donorapplication"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "118016619495-h4me9sob6iphjqrg7dvc3jccf71dnbou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "two.ses.donorapplication",
+            "certificate_hash": "f295e55bf74a2f9e071e59aaa3ab0ccf9d3a1cf2"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBO-21M-pmcPII9LWWIC2d3dTnkm4okIIA"
