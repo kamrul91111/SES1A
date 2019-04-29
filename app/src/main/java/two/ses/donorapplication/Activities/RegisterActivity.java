@@ -43,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText confirmEditText;
     @BindView(R.id.rgroup)
     RadioGroup radioGroup;
+    EditText addressEditText;
     @BindView(R.id.categoriesSP)
     Spinner categoriesSpinner;
 
@@ -115,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String password = passwordEditText.getText().toString();
         final String confirm = confirmEditText.getText().toString();
         final String name = nameEditText.getText().toString();
+        final String address = addressEditText.getText().toString();
         //Check which group is selected
         progressDialog.show();
         radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
@@ -153,10 +155,14 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+
                             User user = new User(
                                     name,
                                     username,
-                                    group
+                                    group,
+                                    address
+
+
                             );
                             //Add user to correct group with categories if charity was selected
                             if(group.equals("Donor")){
