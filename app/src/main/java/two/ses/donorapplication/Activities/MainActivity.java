@@ -127,7 +127,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void ChangeFragment(Fragment fragment) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

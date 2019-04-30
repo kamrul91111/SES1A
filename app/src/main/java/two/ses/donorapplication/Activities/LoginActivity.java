@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "LogIn: username: " + username + " password: " + password);
 
 
+
         // Start a new activity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

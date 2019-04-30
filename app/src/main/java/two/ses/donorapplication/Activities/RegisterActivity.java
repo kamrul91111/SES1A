@@ -115,6 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String password = passwordEditText.getText().toString();
         final String confirm = confirmEditText.getText().toString();
         final String name = nameEditText.getText().toString();
+        final String[] events = new String[1];
         //Check which group is selected
         progressDialog.show();
         radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
@@ -156,7 +157,8 @@ public class RegisterActivity extends AppCompatActivity {
                             User user = new User(
                                     name,
                                     username,
-                                    group
+                                    group,
+                                    events
                             );
                             //Add user to correct group with categories if charity was selected
                             if(group.equals("Donor")){
