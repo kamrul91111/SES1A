@@ -33,6 +33,8 @@
     <string name="register_password_confirm_txt">Confirm password</string>
     <string name="confirm_txt">Register</string>
 
+    <string name="charity_search">Input the Charity Name to Search:</string>
+
     <string-array name="categories">
         <item>Animals</item>
         <item>Arts,Culture,Humanities</item>
