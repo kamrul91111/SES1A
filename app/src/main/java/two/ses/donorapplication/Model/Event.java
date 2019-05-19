@@ -5,7 +5,8 @@ public class Event {
     public Event(){
 
     }
-    public Event(String date, String time, String userID, String charityID){
+    public Event(String eventID, String date, String time, String userID, String charityID){
+        this.eventID = eventID;
         this.date = date;
         this.time = time;
         this.userID = userID;
@@ -43,4 +44,9 @@ public class Event {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public void setEventID(String eventID) { this.eventID = eventID; }
+
+    public String getEventID() { return eventID; }
+
 }

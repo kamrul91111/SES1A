@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import two.ses.donorapplication.EventListAdapter;
 import two.ses.donorapplication.Model.Event;
 import two.ses.donorapplication.R;
 
@@ -36,20 +40,17 @@ import two.ses.donorapplication.R;
  */
 public class ViewBookingsFragment extends Fragment {
     // Note how Butter Knife also works on Fragments, but here it is a little different
-    @BindView(R.id.userTV)
-    TextView userTV;
-    @BindView(R.id.charityTV)
-    TextView charityTV;
-    @BindView(R.id.timeTV)
-    TextView timeTV;
-    @BindView(R.id.dateTV)
-    TextView dateTV;
+    @BindView(R.id.list_view)
+    ListView listView;
+    @BindView(R.id.delete)
+    Button deleteBtn;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference uEventsRef,eventsRef;
     private FirebaseAuth mAuth;
     private ArrayList<Event> events = new ArrayList<Event>();
     private ArrayList<String> eventIDS = new ArrayList<String>();
+    private int index;
 
     public ViewBookingsFragment() {
         // Required empty public constructor
@@ -65,6 +66,12 @@ public class ViewBookingsFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         uEventsRef = mFirebaseDatabase.getReference("User").child(mAuth.getCurrentUser().getUid()).child("events");
         eventsRef = mFirebaseDatabase.getReference("Events");
+        if(eventIDS.size() > 0) {
+            events.clear();
+            eventIDS.clear();
+        }
+        getEventID();
+        getEvents();
     }
 
     @Override
@@ -84,8 +91,17 @@ public class ViewBookingsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Now that the view has been created, we can use butter knife functionality
-        getEventID();
-        getEvents();
+        deleteBtn.setEnabled(false);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id)
+            {
+                deleteBtn.setEnabled(true);
+                index = position;
+            }
+        });
     }
 
     private void getEventID() {
@@ -96,12 +112,12 @@ public class ViewBookingsFragment extends Fragment {
                 // whenever data at this location is updated.
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Boolean eventID = ds.getValue(Boolean.class);
-                    int i = 0;
                     if (eventID) {
                         eventIDS.add(ds.getKey());
-                        Log.i("Tag", eventIDS.get(i));
-                        i++;
                     }
+                }
+                for (int i =0; i < eventIDS.size(); i++){
+                    Log.i("Events are: ", eventIDS.get(i));
                 }
             }
             @Override
@@ -114,19 +130,26 @@ public class ViewBookingsFragment extends Fragment {
         eventsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int i = 0;
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    Log.i("TAG", ds.getKey());
-                    Log.i("TAG", ds.child("date").getValue(String.class));
-                    Log.i("TAG", ds.child("time").getValue(String.class));
-                    Log.i("TAG", ds.child("userID").getValue(String.class));
-                   Event event = new Event(ds.child("date").getValue(String.class),
-                           ds.child("time").getValue(String.class),
-                           ds.child("userID").getValue(String.class),
-                           mAuth.getCurrentUser().getUid());
-                   events.add(event);
-                   createPacket();
+                for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                    if (eventIDS.contains(ds.getKey())) {
+                        Log.i("Events are:", ds.getKey() + ds.getValue());
+                        Event event = new Event(ds.getKey(),
+                                ds.child("Date").getValue(String.class),
+                                ds.child("Time").getValue(String.class),
+                                ds.child("UserID").getValue(String.class),
+                                mAuth.getCurrentUser().getUid());
+                        events.add(event);
+
+                        String record = "Date: " + event.getDate() + "\n"
+                                + "Time: " + event.getTime() + "\n"
+                                + "User: " + event.getUserID() + "\n"
+                                + "Charity: " + event.getCharityID();
+
+                        Log.d("TAG", "Value is: " + record);
                 }
+                }
+                EventListAdapter adapter = new EventListAdapter(getContext(), R.layout.listview_event_data, events);
+                listView.setAdapter(adapter);
             }
 
             @Override
@@ -135,12 +158,12 @@ public class ViewBookingsFragment extends Fragment {
             }
         });
     }
-
-    private void createPacket(){
-        int i = 0;
-        dateTV.setText(events.get(i).getDate());
-        timeTV.setText(events.get(i).getTime());
-        userTV.setText(events.get(i).getUserID());
-        charityTV.setText(events.get(i).getCharityID());
+    @OnClick(R.id.delete)
+    public void deleteEvent() {
+        uEventsRef.child(eventIDS.get(index)).setValue(false);
+        events.remove(index);
+        eventIDS.remove(index);
+        EventListAdapter adapter = new EventListAdapter(getContext(), R.layout.listview_event_data, events);
+        listView.setAdapter(adapter);
     }
 }
