@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import two.ses.donorapplication.R;
@@ -24,11 +27,28 @@ import two.ses.donorapplication.R;
  */
 public class UserInformationFragment extends Fragment {
     // Note how Butter Knife also works on Fragments, but here it is a little different
-    @BindView(R.id.blank_frag_msg)
-    TextView blankFragmentTV;
+    @BindView(R.id.name_tv)
+    TextView nameTV;
+
+    @BindView(R.id.group_tv)
+    TextView groupTV;
+
+    @BindView(R.id.email_tv)
+    TextView emailTV;
+
+    @BindView(R.id.phone_tv)
+    TextView phoneTV;
+
+    @BindView(R.id.address_tv)
+    TextView addressTV;
+
+    private FirebaseAuth mAuth;
 
     public UserInformationFragment() {
-        // Required empty public constructor
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        nameTV.setText("Name:");
+        emailTV.setText("Email:" + user.getEmail());
     }
 
     @Override
@@ -55,6 +75,6 @@ public class UserInformationFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Now that the view has been created, we can use butter knife functionality
-        blankFragmentTV.setText("Welcome to this fragment");
+        //blankFragmentTV.setText("Welcome to this fragment");
     }
 }

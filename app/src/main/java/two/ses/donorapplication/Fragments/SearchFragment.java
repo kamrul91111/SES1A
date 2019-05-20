@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import two.ses.donorapplication.R;
 
@@ -23,7 +22,7 @@ import two.ses.donorapplication.R;
  */
 public class SearchFragment extends Fragment {
     // Note how Butter Knife also works on Fragments, but here it is a little different
-    @BindView(R.id.blank_frag_msg)
+    //@BindView(R.id.blank_frag_msg)
     TextView blankFragmentTV;
 
 

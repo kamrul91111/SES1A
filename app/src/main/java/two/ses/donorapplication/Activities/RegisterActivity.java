@@ -73,12 +73,13 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Set drop down menu and setup process dialog
+        /*
         categoriesSpinner.setVisibility(View.INVISIBLE);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Registering");
         progressDialog.setMessage("Loading ...");
         progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCanceledOnTouchOutside(false);*/
 
         //Load options for the drop down menu for selecting categories
         ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(RegisterActivity.this,
@@ -116,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String confirm = confirmEditText.getText().toString();
         final String name = nameEditText.getText().toString();
         //Check which group is selected
-        progressDialog.show();
+        //progressDialog.show();
         radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
         final String group = radioButton.getText().toString();
         final String category = categoriesSpinner.getSelectedItem().toString();
@@ -176,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
                                         toastMessage("User Registered Successfully");
-                                        progressDialog.dismiss();
+                                        //progressDialog.dismiss();
                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
