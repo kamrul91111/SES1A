@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString();
 
         // TODO: For now, the login button will simply print on the console the username/password and let you in
-        // TODO  : It is up to you guys to implement a proper login system
+        // TODO: It is up to you guys to implement a proper login system
 
         // Having a tag, and the name of the function on the console message helps allot in
         // knowing where the message should appear.
