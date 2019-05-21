@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,11 +22,6 @@ public class SelectTime extends AppCompatActivity {
     Spinner timeSpinner;
     String selectedTime;
     Button selectTimeBtn;
-    private FirebaseAuth mAuth;
-    String placeHolderCharityId;
-    private DatabaseReference uEventsRef;
-    private String[] bookedTimes;
-    String charityId = "test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,64 +52,17 @@ public class SelectTime extends AppCompatActivity {
         selectTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // if(!isBooked()){
-                    String eventId = UUID.randomUUID().toString();
-                    String userId;
-                    Log.d("Time on click:", selectedTime);
+                String id = UUID.randomUUID().toString();
+                Log.d("Time on click:", selectedTime);
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Events");
+                myRef.child(id).child("Date").setValue(AddBooking.getDate());
+                myRef.child(id).child("Time").setValue(selectedTime);
+                myRef.child(id).child("UserID").setValue("UsersID");
+                Intent intent = new Intent(SelectTime.this, LoginActivity.class);
+                startActivity(intent);
 
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    mAuth = FirebaseAuth.getInstance();
-                    userId = mAuth.getCurrentUser().getUid();
-                    DatabaseReference eventsRef = database.getReference("Events");
-                    DatabaseReference userRef = database.getReference("User");
-
-                    eventsRef.child(eventId).child("Charity ID").setValue(placeHolderCharityId);
-                    eventsRef.child(eventId).child("Date").setValue(AddBooking.getDate());
-                    eventsRef.child(eventId).child("Time").setValue(selectedTime);
-                    eventsRef.child(eventId).child("UserID").setValue(userId);
-
-                    userRef.child(userId).child(eventId).setValue("true");
-
-                    Intent intent = new Intent(SelectTime.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-           // }
+            }
         });
-
-
-
     }
-
-//     private boolean isBooked() {
-//     String charityId = "test"; //Need to change this to get passed in from search
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference userRef = database.getReference("User");
-//
-//        userRef.child(charityId).child("events");
-//
-//        return false;
-//     }
-//
-//    private void getBookedTimes() {
-//        uEventsRef.addValueEventListener(new ValueEventListener() {
-//           @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                for (DataSnapshot ds: dataSnapshot.child("users").child(charityId).child("events").getChildren()){
-//                    Boolean eventID = ds.getValue(Boolean.class);
-//                    int i = 0;
-//                    if (eventID) {
-//                        eventIDS.add(ds.getKey());
-//                        Log.i("Tag", eventIDS.get(i));
-//                        i++;
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 }
