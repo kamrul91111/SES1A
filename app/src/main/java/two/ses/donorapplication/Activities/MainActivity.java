@@ -1,6 +1,5 @@
 package two.ses.donorapplication.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,8 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import two.ses.donorapplication.Fragments.SearchFragment;
 import two.ses.donorapplication.Fragments.UserInformationFragment;
 import two.ses.donorapplication.Fragments.ViewBookingsFragment;
@@ -26,8 +23,6 @@ public class MainActivity extends AppCompatActivity
 
 
     private DrawerLayout mDrawer;
-
-    private FirebaseAuth mAuth;
 
     /**
      * A reference to the toolbar
@@ -56,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
+
         fragmentManager = getSupportFragmentManager();
 
         // Add the default Fragment once the user logged in
@@ -92,9 +87,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            mAuth.signOut();
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

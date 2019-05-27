@@ -27,6 +27,7 @@ public class UserInformationFragment extends Fragment {
     @BindView(R.id.blank_frag_msg)
     TextView blankFragmentTV;
 
+
     public UserInformationFragment() {
         // Required empty public constructor
     }
